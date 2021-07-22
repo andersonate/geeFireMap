@@ -23,7 +23,7 @@ modis_img <- ee$ImageCollection("MODIS/006/MCD64A1")$
 # ee_get_date_ic(modis_img, time_end = TRUE) ### check date range
 
 meanImage <- modis_img$reduce(ee$Reducer$count()) ## gte the count of non-Zero numvbers for each pixel
-print(meanImage$getInfo())
+# print(meanImage$getInfo())
 
 
 viz <- list(
@@ -41,10 +41,50 @@ Map$addLayer(
 ) 
 
 ## geometry for raster export
-geometry <- ee$Geometry$Rectangle( 
-  coords = c(-179.999, -90, 180, 90)
+
+## EH
+geometryEH <- ee$Geometry$Rectangle(
+  coords = c(0, -90, 180, 90),
+  proj = "EPSG:4326"
+)
+
+# ## WH
+geometryWH <- ee$Geometry$Rectangle(
+  coords = c(-180, -90, 0, 90),
+  proj = "EPSG:4326"
 )
 
 
+
+# Map$addLayer(
+#   eeObject = geometry,
+#   visParams = viz,
+#   name = "Months_burned",
+#   legend=TRUE
+# )
+
+# rgee::ee_image_info(meanImage)
+# print(meanImage$getInfo())
+
 # raster export
-ee_as_raster(meanImage,dsn = "BurnDateCount.tif", region = geometry, via = "drive")
+ee_as_raster(meanImage,
+             dsn = "output/20210722BurnDateCount_WH.tif", 
+             region = geometryWH, 
+             via = "drive",
+             scale = 500,
+             maxPixels = 1606085776
+              )
+# ee_as_raster(meanImage,
+#              dsn = "output/20210722BurnDateCount_EH.tif", 
+#              region = geometryEH, 
+#              via = "drive",
+#              scale = 500,
+#              maxPixels = 1606085776
+# )
+# meanImage$getInfo()
+# # Map$addLayer(
+# #   eeObject = geometry,
+# #   # visParams = viz,
+# #   name = "Months_burned",
+# #   legend=TRUE
+# # )

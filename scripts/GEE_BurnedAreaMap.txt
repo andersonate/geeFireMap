@@ -1,0 +1,12 @@
+var dataset = ee.ImageCollection('MODIS/006/MCD64A1')
+                  .filter(ee.Filter.date("2000-11-01", "2021-05-01"));
+var burnedArea = dataset.select('BurnDate');
+var meanImage = burnedArea.reduce(ee.Reducer.count());
+
+var burnedAreaVis = {
+  min: 0.0,
+  max: 20.0,
+  palette: ["ffffb2", "fecc5c", "fd8d3c", "f03b20", "bd0026"],
+};
+
+Map.addLayer(meanImage, burnedAreaVis, 'Burned Area');
