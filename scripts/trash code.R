@@ -44,7 +44,7 @@ ee_print(dataset)
 # https://csaybar.github.io/blog/2020/06/10/rgee_01_worldmap/
 
 library(rgee)
-ee_Initialize(email = 'michelineleecampbell@gmail.com',drive = TRUE)
+ee_Initialize(email = '',drive = TRUE) #to use GEE, insert your own activated email within the '' 
 
 # library(raster)  # Manipulate raster data
 # library(scales)  # Scale functions for visualization
